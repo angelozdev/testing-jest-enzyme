@@ -2,7 +2,13 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import App from './App'
 
-test('renders without crashing', () => {})
+test('renders without crashing', () => {
+  const wrapper = shallow(<App />)
+
+  const app = wrapper.find('[data-test="app"]')
+
+  expect(app).toBeTruthy()
+})
 
 test('renders button', () => {})
 
