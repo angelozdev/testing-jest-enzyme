@@ -1,13 +1,13 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import { shallow } from 'enzyme'
 import App from './App'
 
-Enzyme.configure({ adapter: new Adapter() })
+test('renders without crashing', () => {})
 
-test('renders without crashing', () => {
-  const wrapper = shallow(<App />)
+test('renders button', () => {})
 
-  expect(wrapper.text()).toMatch(/world/i)
-  expect(wrapper).toBeTruthy()
-})
+test('renders counter display', () => {})
+
+test('counter starts at 0', () => {})
+
+test('clicking on button increments counter display', () => {})
