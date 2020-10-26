@@ -10,6 +10,8 @@ const setup = (): ShallowWrapper => shallow(<App />)
 
 /** Find a react component by data-test attribute
  * @function findByTestAttribute
+ * @param {ShallowWrapper} wrapper - Enzyme shallow
+ * @param {string} value - Value of data-test
  * @returns {ShallowWrapper}
  **/
 const findByTestAttribute = (
@@ -33,20 +35,6 @@ test('renders counter display', () => {
   expect(counterDisplay).toHaveLength(1)
 })
 
-test('renders increment button', () => {
-  const wrapper = setup()
-  const incrementButton = findByTestAttribute(wrapper, 'increment-button')
-
-  expect(incrementButton).toHaveLength(1)
-})
-
-test('renders decrement button', () => {
-  const wrapper = setup()
-  const decrementButton = findByTestAttribute(wrapper, 'decrement-button')
-
-  expect(decrementButton).toHaveLength(1)
-})
-
 test('counter starts at 0', () => {
   const wrapper = setup()
   const counter = findByTestAttribute(wrapper, 'counter')
@@ -54,32 +42,92 @@ test('counter starts at 0', () => {
   expect(counter.text()).toBe('0')
 })
 
-test('clicking on button increment counter display', () => {
-  const wrapper = setup()
+describe('Increment Button', () => {
+  test('renders increment button', () => {
+    const wrapper = setup()
+    const incrementButton = findByTestAttribute(wrapper, 'increment-button')
 
-  // Find the button
-  const button = findByTestAttribute(wrapper, 'increment-button')
+    expect(incrementButton).toHaveLength(1)
+  })
 
-  // click th ebutton
-  button.simulate('click')
+  test('clicking on button increment counter display', () => {
+    const wrapper = setup()
 
-  // find the display and test that the number has been incremented
-  const counter = findByTestAttribute(wrapper, 'counter')
+    // Find the button
+    const button = findByTestAttribute(wrapper, 'increment-button')
 
-  expect(counter.text()).toBe('1')
+    // click th ebutton
+    button.simulate('click')
+
+    // find the display and test that the number has been incremented
+    const counter = findByTestAttribute(wrapper, 'counter')
+
+    expect(counter.text()).toBe('1')
+  })
 })
 
-test('clicking on button decrement counter display', () => {
-  const wrapper = setup()
+describe('Decrement Button', () => {
+  test('renders decrement button', () => {
+    const wrapper = setup()
+    const decrementButton = findByTestAttribute(wrapper, 'decrement-button')
 
-  // Find the button
-  const button = findByTestAttribute(wrapper, 'decrement-button')
+    expect(decrementButton).toHaveLength(1)
+  })
 
-  // click th ebutton
-  button.simulate('click')
+  test('clicking on button decrements when the counter is greater than 0', () => {
+    const wrapper = setup()
 
-  // find the display and test that the number has been decrement
-  const counter = findByTestAttribute(wrapper, 'counter')
+    // click the increment button
+    const incButton = findByTestAttribute(wrapper, 'increment-button')
+    incButton.simulate('click')
 
-  expect(counter.text()).toBe('-1')
+    // click the decrement button
+    const decButton = findByTestAttribute(wrapper, 'decrement-button')
+    decButton.simulate('click')
+
+    // find the display and test that the number has been decrement
+    const counter = findByTestAttribute(wrapper, 'counter')
+
+    expect(counter.text()).toBe('0')
+  })
+})
+
+describe('Error message', () => {
+  test("The error doesn't show when not needed", () => {
+    const wrapper = setup()
+
+    const errorDiv = findByTestAttribute(wrapper, 'error-message')
+
+    expect(errorDiv.prop('hidden')).toBeTruthy()
+  })
+})
+
+describe('Counter is 0 and decrement button is clicked', () => {
+  let wrapper: ShallowWrapper
+  beforeEach(() => {
+    wrapper = setup()
+
+    const decButton = findByTestAttribute(wrapper, 'decrement-button')
+    decButton.simulate('click')
+  })
+
+  test('Show message error when decrement button is clicked when the counter is 0', () => {
+    const errorMessage = findByTestAttribute(wrapper, 'error-message')
+
+    expect(errorMessage.prop('hidden')).toBe(false)
+  })
+
+  test('Increment button hidden message error', () => {
+    const incButton = findByTestAttribute(wrapper, 'increment-button')
+    incButton.simulate('click')
+
+    const errorMessage = findByTestAttribute(wrapper, 'error-message')
+    expect(errorMessage.prop('hidden')).toBe(true)
+  })
+
+  test("Counter display doesn't change", () => {
+    const counter = findByTestAttribute(wrapper, 'counter').text()
+
+    expect(counter).toBe('0')
+  })
 })
