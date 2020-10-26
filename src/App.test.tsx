@@ -5,9 +5,9 @@ import App from './App'
 test('renders without crashing', () => {
   const wrapper = shallow(<App />)
 
-  const app = wrapper.find('[data-test="app"]')
+  const appComponent = wrapper.find('[data-test="component-app"]')
 
-  expect(app).toBeTruthy()
+  expect(appComponent).toHaveLength(1)
 })
 
 test('renders button', () => {})
