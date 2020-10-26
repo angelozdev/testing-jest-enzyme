@@ -26,18 +26,25 @@ test('renders without crashing', () => {
   expect(appComponent).toHaveLength(1)
 })
 
-test('renders button', () => {
+test('renders counter display', () => {
   const wrapper = setup()
   const counterDisplay = findByTestAttribute(wrapper, 'counter-display')
 
   expect(counterDisplay).toHaveLength(1)
 })
 
-test('renders counter display', () => {
+test('renders increment button', () => {
   const wrapper = setup()
   const incrementButton = findByTestAttribute(wrapper, 'increment-button')
 
   expect(incrementButton).toHaveLength(1)
+})
+
+test('renders decrement button', () => {
+  const wrapper = setup()
+  const decrementButton = findByTestAttribute(wrapper, 'decrement-button')
+
+  expect(decrementButton).toHaveLength(1)
 })
 
 test('counter starts at 0', () => {
@@ -47,4 +54,32 @@ test('counter starts at 0', () => {
   expect(counter.text()).toBe('0')
 })
 
-test('clicking on button increments counter display', () => {})
+test('clicking on button increment counter display', () => {
+  const wrapper = setup()
+
+  // Find the button
+  const button = findByTestAttribute(wrapper, 'increment-button')
+
+  // click th ebutton
+  button.simulate('click')
+
+  // find the display and test that the number has been incremented
+  const counter = findByTestAttribute(wrapper, 'counter')
+
+  expect(counter.text()).toBe('1')
+})
+
+test('clicking on button decrement counter display', () => {
+  const wrapper = setup()
+
+  // Find the button
+  const button = findByTestAttribute(wrapper, 'decrement-button')
+
+  // click th ebutton
+  button.simulate('click')
+
+  // find the display and test that the number has been decrement
+  const counter = findByTestAttribute(wrapper, 'counter')
+
+  expect(counter.text()).toBe('-1')
+})
