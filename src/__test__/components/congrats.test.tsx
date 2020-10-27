@@ -4,7 +4,8 @@ import { Congrats } from '../../components/'
 import { Props } from '../../components/congrats'
 import { findByTestAttr } from '../../utils/testing'
 
-const setup = (props?: Props) => shallow(<Congrats {...props} />)
+const setup = (props: Props = { success: false }) =>
+   shallow(<Congrats {...props} />)
 
 describe('<Congrats />', () => {
    test('renders without crashing', () => {

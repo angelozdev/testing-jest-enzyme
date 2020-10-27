@@ -2,10 +2,10 @@ import React from 'react'
 
 /* Types */
 export interface Props {
-   success: boolean
+   readonly success: boolean
 }
 
-const Congrats = ({ success = false }: Partial<Props>): JSX.Element => {
+const Congrats = ({ success = false }: Props): JSX.Element => {
    return (
       <div data-test="component-congrats" hidden={success}>
          <p>Congrats!</p>
