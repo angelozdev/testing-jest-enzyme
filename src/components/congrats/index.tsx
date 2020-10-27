@@ -1,13 +1,16 @@
 import React from 'react'
-import { findByTestAttr } from '../../utils/testing'
 
 /* Types */
 export interface Props {
    success: boolean
 }
 
-const Congrats = (props: Props): JSX.Element => {
-   return <div>congrats</div>
+const Congrats = ({ success = false }: Partial<Props>): JSX.Element => {
+   return (
+      <div data-test="component-congrats" hidden={success}>
+         <p>Congrats!</p>
+      </div>
+   )
 }
 
 export default Congrats
