@@ -5,7 +5,7 @@ import { GuessedWords } from '../../components'
 import { Props } from '../../components/GuessedWords'
 
 const defaultProps: Props = {
-   geuessedWords: [
+   guessedWords: [
       {
          guessedWord: 'train',
          letterMatchCount: 3
@@ -22,7 +22,7 @@ describe('if there are no words guessed', () => {
    let wrapper: ShallowWrapper
 
    beforeEach(() => {
-      wrapper = setup({ geuessedWords: [] })
+      wrapper = setup({ guessedWords: [] })
    })
 
    /* Tests */
