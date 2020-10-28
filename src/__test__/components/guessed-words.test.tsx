@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, ShallowWrapper } from 'enzyme'
 import { findByTestAttr } from '../../utils/testing'
 import { GuessedWords } from '../../components'
 import { Props } from '../../components/GuessedWords'
@@ -17,13 +17,25 @@ const setup = (props: Props = defaultProps) => {
    return shallow(<GuessedWords {...props} />)
 }
 
-describe('<GuessedWords />', () => {
-   test('renders without error', () => {
-      const wrapper = setup()
+describe('if there are no words guessed', () => {
+   /* Setup */
+   let wrapper: ShallowWrapper
 
-      expect(wrapper).toHaveLength(1)
+   beforeEach(() => {
+      wrapper = setup({ geuessedWords: [] })
+   })
+
+   /* Tests */
+   test('renders without error', () => {
+      const component = findByTestAttr(wrapper, 'component-guessed-words')
+
+      expect(component).toHaveLength(1)
+   })
+
+   test('renders instructions to guess a word', () => {
+      const instructions = findByTestAttr(wrapper, 'guess-instructions')
+
+      expect(instructions).not.toHaveLength(0)
    })
 })
-
-describe('if there are no words guessed', () => {})
 describe('if there are words guessed', () => {})
