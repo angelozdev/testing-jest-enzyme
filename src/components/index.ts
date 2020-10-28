@@ -1,1 +1,2 @@
-export { default as Congrats } from './congrats'
+export { default as Congrats } from './Congrats'
+export { default as GuessedWords } from './GuessedWords'

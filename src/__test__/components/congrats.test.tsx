@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { Congrats } from '../../components/'
-import { Props } from '../../components/congrats'
+import { Props } from '../../components/Congrats'
 import { findByTestAttr } from '../../utils/testing'
 
 const setup = (props: Props = { success: false }) =>
