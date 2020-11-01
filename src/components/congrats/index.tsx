@@ -7,8 +7,12 @@ export interface Props {
 
 const Congrats = ({ success = false }: Props): JSX.Element => {
    return (
-      <div data-test="component-congrats" hidden={success}>
-         <p>Congrats!</p>
+      <div
+         className="my-8 bg-green-100 border-t border-b border-green-500 text-green-700 px-4 py-3"
+         data-test="component-congrats"
+         hidden={!success}
+      >
+         <p>Congrats! You guessed the word!</p>
       </div>
    )
 }

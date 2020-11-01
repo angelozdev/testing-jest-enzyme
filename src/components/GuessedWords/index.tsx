@@ -26,9 +26,13 @@ const GuessedWords = ({ guessedWords }: Props): JSX.Element => {
       const { guessedWord, letterMatchCount } = item
 
       return (
-         <tr data-test={TestId.GUESSED_WORD} key={index}>
-            <th>{guessedWord}</th>
-            <th>{letterMatchCount}</th>
+         <tr
+            className="bg-gray-200"
+            data-test={TestId.GUESSED_WORD}
+            key={index}
+         >
+            <td className="border px-4 py-2">{guessedWord}</td>
+            <td className="border px-4 py-2">{letterMatchCount}</td>
          </tr>
       )
    })
@@ -36,13 +40,18 @@ const GuessedWords = ({ guessedWords }: Props): JSX.Element => {
    if (hasGuessedWords) {
       content = (
          <Fragment>
-            <h3>Guessed Words</h3>
+            <h3 className="text-2xl mb-2">Guessed Words</h3>
 
-            <table data-test={TestId.GUESSED_WORDS}>
-               <thead>
+            <table
+               className="table-auto mx-auto"
+               data-test={TestId.GUESSED_WORDS}
+            >
+               <thead className="bg-gray-300">
                   <tr>
-                     <th>Guess</th>
-                     <th>Matching Letters</th>
+                     <th className="px-4 py-2 border border-gray-400">Guess</th>
+                     <th className="px-4 py-2 border border-gray-400">
+                        Matching Letters
+                     </th>
                   </tr>
                </thead>
                <tbody>{guessedWordRows}</tbody>

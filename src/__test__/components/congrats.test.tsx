@@ -20,12 +20,12 @@ test('renders no text when success prop is false', () => {
    const wrapper = setup({ success: false })
    const component = findByTestAttr(wrapper, 'component-congrats')
 
-   expect(component.prop('hidden')).toBe(false)
+   expect(component.prop('hidden')).toBe(true)
 })
 
 test('renders non-empty congrats message when success prop is true', () => {
    const wrapper = setup({ success: true })
    const component = findByTestAttr(wrapper, 'component-congrats')
 
-   expect(component.prop('hidden')).toBe(true)
+   expect(component.prop('hidden')).toBe(false)
 })
