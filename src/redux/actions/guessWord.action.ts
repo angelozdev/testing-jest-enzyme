@@ -16,11 +16,18 @@ interface guessWordRequestAction {
 
 interface guessWordFailedAction {
    type: typeof actionTypes.GUESS_WORD_FAILED
+   error: null | Error
 }
 
 interface guessWordSuccessAction {
    type: typeof actionTypes.GUESS_WORD_SUCCESS
 }
+
+export type Action =
+   | guessWordIdleAction
+   | guessWordRequestAction
+   | guessWordFailedAction
+   | guessWordSuccessAction
 
 /* Actions */
 export const guessWordIdle = (): guessWordIdleAction => ({
@@ -31,8 +38,9 @@ export const guessWordRequest = (): guessWordRequestAction => ({
    type: actionTypes.GUESS_WORD_REQUEST
 })
 
-export const guessWordFailed = (): guessWordFailedAction => ({
-   type: actionTypes.GUESS_WORD_FAILED
+export const guessWordFailed = (error: Error): guessWordFailedAction => ({
+   type: actionTypes.GUESS_WORD_FAILED,
+   error
 })
 
 export const guessWordSuccess = (): guessWordSuccessAction => ({
