@@ -8,13 +8,15 @@ import reportWebVitals from './reportWebVitals'
 import store from './redux/redux.store'
 import { Provider } from 'react-redux'
 
+const root = document.getElementById('root')
+
 ReactDOM.render(
    <React.StrictMode>
       <Provider store={store}>
          <App />
       </Provider>
    </React.StrictMode>,
-   document.getElementById('root')
+   root
 )
 
 // If you want to start measuring performance in your app, pass a function

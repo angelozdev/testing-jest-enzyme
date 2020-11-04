@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import succes from './success.reducer'
+import guessWord from './guessWord.reducer'
 
 const reducer = combineReducers({
-   succes
+   guessWord
 })
 
 export default reducer
