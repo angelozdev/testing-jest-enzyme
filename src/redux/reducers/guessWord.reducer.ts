@@ -8,7 +8,7 @@ export enum status {
    FAILED = 'failed'
 }
 
-interface InitialState {
+export interface GuessWordState {
    status: status
    data: {
       isCorrectWord: boolean
@@ -17,7 +17,7 @@ interface InitialState {
 }
 
 /* Initial state */
-const initialState: InitialState = {
+const initialState: GuessWordState = {
    status: status.IDLE,
    data: {
       isCorrectWord: false
@@ -27,9 +27,9 @@ const initialState: InitialState = {
 
 /* Reducer */
 function guessWord(
-   state: InitialState = initialState,
+   state: GuessWordState = initialState,
    action?: Action
-): InitialState {
+): GuessWordState {
    switch (action?.type) {
       case actionTypes.GUESS_WORD_REQUEST:
          return {

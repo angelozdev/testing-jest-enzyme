@@ -35,9 +35,12 @@ describe('Actions return correct type', () => {
    })
 
    test("returns the action with type 'GUESS_WORD_FAILED'", () => {
-      const action = guessWordFailed()
+      const errorMock = new Error('Testing')
+
+      const action = guessWordFailed(errorMock)
       const expectedAction = {
-         type: actionTypes.GUESS_WORD_FAILED
+         type: actionTypes.GUESS_WORD_FAILED,
+         error: errorMock
       }
 
       expect(action).toEqual(expectedAction)

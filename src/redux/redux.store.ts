@@ -1,5 +1,11 @@
 import { compose, createStore } from 'redux'
 import reducer from './reducers'
+import { GuessWordState } from './reducers/guessWord.reducer'
+
+/* Types */
+export interface State {
+   guessWord: GuessWordState
+}
 
 const composeEnhancers =
    (typeof window !== 'undefined' &&
