@@ -1,7 +1,8 @@
 import { ReactWrapper, ShallowWrapper } from 'enzyme'
-import { createStore } from 'redux'
+import { applyMiddleware, createStore } from 'redux'
 import reducer from '../../redux/reducers'
 import { State } from '../../redux/redux.store'
+import Thunk from 'redux-thunk'
 
 export const findByTestAttr = (
    wrapper: ShallowWrapper | ReactWrapper,
@@ -15,5 +16,5 @@ export const findByTestAttr = (
 }
 
 export const storeFactory = (initialState: State) => {
-   return createStore(reducer, initialState)
+   return createStore(reducer, initialState, applyMiddleware(Thunk))
 }

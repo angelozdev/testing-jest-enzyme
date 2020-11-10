@@ -61,9 +61,39 @@ describe('render', () => {
    })
 
    describe('word has been guessed', () => {
-      test('renders component without error', () => {})
-      test('does not renders input box', () => {})
-      test('does not renders submit button', () => {})
+      let wrapper: ReactWrapper
+
+      /* Setup */
+      beforeEach(() => {
+         wrapper = setup({
+            ...initialState,
+            guessWord: {
+               ...initialState.guessWord,
+               data: {
+                  ...initialState.guessWord.data,
+                  isCorrectWord: true
+               }
+            }
+         })
+      })
+
+      test('renders component without error', () => {
+         const Container = findByTestAttr(wrapper, Components.CONTAINER)
+
+         expect(Container).toHaveLength(0)
+      })
+
+      test('does not renders input box', () => {
+         const Input = findByTestAttr(wrapper, Components.INPUT)
+
+         expect(Input).toHaveLength(0)
+      })
+
+      test('does not renders submit button', () => {
+         const Button = findByTestAttr(wrapper, Components.BUTTON)
+
+         expect(Button).toHaveLength(0)
+      })
    })
 })
 
