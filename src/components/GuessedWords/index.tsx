@@ -1,11 +1,7 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { State } from '../../redux/redux.store'
 
-export interface Props {
-   guessedWords: Array<{
-      guessedWord: string
-      letterMatchCount: number
-   }>
-}
 export enum TestId {
    COMPONENT_GUESSED_WORDS,
    GUESS_INSTRUCTIONS,
@@ -13,26 +9,25 @@ export enum TestId {
    GUESSED_WORD
 }
 
-const GuessedWords = ({ guessedWords }: Props): JSX.Element => {
+const GuessedWords = (): JSX.Element => {
    /* Destructuruing */
    const { Fragment } = React
 
    /* States */
    let content: JSX.Element
+   const { guessedWords } = useSelector((state: State) => state.guessWord.data)
    const hasGuessedWords = guessedWords.length !== 0
 
    /* Views */
    const guessedWordRows = guessedWords.map((item, index) => {
-      const { guessedWord, letterMatchCount } = item
-
       return (
          <tr
             className="bg-gray-200"
             data-test={TestId.GUESSED_WORD}
             key={index}
          >
-            <td className="border px-4 py-2">{guessedWord}</td>
-            <td className="border px-4 py-2">{letterMatchCount}</td>
+            <td className="border px-4 py-2">{item.guessedWord}</td>
+            <td className="border px-4 py-2">{item.letterMatchCount}</td>
          </tr>
       )
    })

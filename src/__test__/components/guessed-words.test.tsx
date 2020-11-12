@@ -1,23 +1,39 @@
 import React from 'react'
-import { shallow, ShallowWrapper } from 'enzyme'
-import { findByTestAttr } from '../../utils/testing'
+import { mount, ReactWrapper } from 'enzyme'
+import { findByTestAttr, storeFactory } from '../../utils/testing'
 import { GuessedWords } from '../../components'
-import { Props, TestId } from '../../components/GuessedWords'
+import { TestId } from '../../components/GuessedWords'
+import { Provider } from 'react-redux'
+import { State } from '../../redux/redux.store'
+import { status } from '../../redux/reducers/guessWord.reducer'
 
-const defaultProps: Props = {
-   guessedWords: [{ guessedWord: 'train', letterMatchCount: 3 }]
+const initialState: State = {
+   guessWord: {
+      data: {
+         guessedWords: [],
+         isCorrectWord: false,
+         secretWord: ''
+      },
+      error: null,
+      status: status.IDLE
+   }
 }
 
-const setup = (props: Props = defaultProps) => {
-   return shallow(<GuessedWords {...props} />)
+const setup = (i: State = initialState) => {
+   const store = storeFactory(i)
+   return mount(
+      <Provider store={store}>
+         <GuessedWords />
+      </Provider>
+   )
 }
 
 describe('if there are no words guessed', () => {
    /* Setup */
-   let wrapper: ShallowWrapper
+   let wrapper: ReactWrapper
 
    beforeEach(() => {
-      wrapper = setup({ guessedWords: [] })
+      wrapper = setup()
    })
 
    /* Tests */
@@ -49,10 +65,20 @@ describe('if there are words guessed', () => {
    ]
 
    /* Setup */
-   let wrapper: ShallowWrapper
+   let wrapper: ReactWrapper
 
    beforeEach(() => {
-      wrapper = setup({ guessedWords: guessedWordsMock })
+      const i: State = {
+         ...initialState,
+         guessWord: {
+            ...initialState.guessWord,
+            data: {
+               ...initialState.guessWord.data,
+               guessedWords: guessedWordsMock
+            }
+         }
+      }
+      wrapper = setup(i)
    })
 
    /* Tests */

@@ -13,7 +13,9 @@ const initialState: State = {
    guessWord: {
       status: status.IDLE,
       data: {
-         isCorrectWord: false
+         isCorrectWord: false,
+         guessedWords: [],
+         secretWord: ''
       },
       error: null
    }

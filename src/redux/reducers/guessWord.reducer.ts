@@ -1,4 +1,5 @@
-import { actionTypes, Action } from '../actions/guessWord.action'
+import getLetterMatchCount from '../../utils/getLetterMatchCount'
+import { actionTypes, GuessWordAction } from '../actions/guessWord.action'
 
 /* Types */
 export enum status {
@@ -12,6 +13,11 @@ export interface GuessWordState {
    status: status
    data: {
       isCorrectWord: boolean
+      secretWord: string
+      guessedWords: Array<{
+         guessedWord: string
+         letterMatchCount: number
+      }>
    }
    error: null | Error
 }
@@ -20,7 +26,9 @@ export interface GuessWordState {
 const initialState: GuessWordState = {
    status: status.IDLE,
    data: {
-      isCorrectWord: false
+      isCorrectWord: false,
+      secretWord: '',
+      guessedWords: []
    },
    error: null
 }
@@ -28,7 +36,7 @@ const initialState: GuessWordState = {
 /* Reducer */
 function guessWord(
    state: GuessWordState = initialState,
-   action?: Action
+   action?: GuessWordAction
 ): GuessWordState {
    switch (action?.type) {
       case actionTypes.GUESS_WORD_REQUEST:
@@ -41,7 +49,20 @@ function guessWord(
          return {
             ...state,
             status: status.FAILED,
-            error: action.error
+            error: action.error,
+            data: {
+               ...state.data,
+               guessedWords: [
+                  ...(state.data.guessedWords || []),
+                  {
+                     guessedWord: action.guessedWord,
+                     letterMatchCount: getLetterMatchCount(
+                        action.guessedWord,
+                        state.data.secretWord
+                     )
+                  }
+               ]
+            }
          }
 
       case actionTypes.GUESS_WORD_SUCCESS:
@@ -49,6 +70,7 @@ function guessWord(
             ...state,
             status: status.SUCCESS,
             data: {
+               ...state.data,
                isCorrectWord: true
             }
          }

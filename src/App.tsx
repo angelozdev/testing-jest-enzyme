@@ -8,14 +8,7 @@ const App = () => {
          <h1 className="text-4xl">Jotto Game</h1>
          <Input />
          <Congrats success={false} />
-         <GuessedWords
-            guessedWords={[
-               {
-                  guessedWord: 'train',
-                  letterMatchCount: 3
-               }
-            ]}
-         />
+         <GuessedWords />
       </div>
    )
 }
