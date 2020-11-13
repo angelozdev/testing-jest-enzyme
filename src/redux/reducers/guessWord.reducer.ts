@@ -1,4 +1,3 @@
-import getLetterMatchCount from '../../utils/getLetterMatchCount'
 import { actionTypes, GuessWordAction } from '../actions/guessWord.action'
 
 /* Types */
@@ -13,7 +12,6 @@ export interface GuessWordState {
    status: status
    data: {
       isCorrectWord: boolean
-      secretWord: string
       guessedWords: Array<{
          guessedWord: string
          letterMatchCount: number
@@ -27,7 +25,6 @@ const initialState: GuessWordState = {
    status: status.IDLE,
    data: {
       isCorrectWord: false,
-      secretWord: '',
       guessedWords: []
    },
    error: null
@@ -56,10 +53,7 @@ function guessWord(
                   ...(state.data.guessedWords || []),
                   {
                      guessedWord: action.guessedWord,
-                     letterMatchCount: getLetterMatchCount(
-                        action.guessedWord,
-                        state.data.secretWord
-                     )
+                     letterMatchCount: action.letterMatchCount
                   }
                ]
             }

@@ -10,12 +10,18 @@ import { status } from '../../redux/reducers/guessWord.reducer'
 
 /* Types */
 const initialState: State = {
+   secretWord: {
+      data: {
+         secretWord: null
+      },
+      error: null,
+      status: status.IDLE
+   },
    guessWord: {
       status: status.IDLE,
       data: {
          isCorrectWord: false,
-         guessedWords: [],
-         secretWord: ''
+         guessedWords: []
       },
       error: null
    }

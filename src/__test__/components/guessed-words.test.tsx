@@ -8,11 +8,17 @@ import { State } from '../../redux/redux.store'
 import { status } from '../../redux/reducers/guessWord.reducer'
 
 const initialState: State = {
+   secretWord: {
+      data: {
+         secretWord: null
+      },
+      error: null,
+      status: status.IDLE
+   },
    guessWord: {
       data: {
          guessedWords: [],
-         isCorrectWord: false,
-         secretWord: ''
+         isCorrectWord: false
       },
       error: null,
       status: status.IDLE

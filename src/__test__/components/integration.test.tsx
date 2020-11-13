@@ -12,9 +12,15 @@ describe('guessedWord action dispatcher', () => {
       /* Setup */
       let store: Store
       const initialState: State = {
+         secretWord: {
+            data: {
+               secretWord
+            },
+            error: null,
+            status: status.IDLE
+         },
          guessWord: {
             data: {
-               secretWord,
                isCorrectWord: false,
                guessedWords: []
             },
@@ -82,9 +88,15 @@ describe('guessedWord action dispatcher', () => {
       /* Setup */
       let store: Store
       const initialState: State = {
+         secretWord: {
+            data: {
+               secretWord
+            },
+            error: null,
+            status: status.IDLE
+         },
          guessWord: {
             data: {
-               secretWord,
                isCorrectWord: false,
                guessedWords: guessedWordsMock
             },

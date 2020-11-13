@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux'
+import getLetterMatchCount from '../../utils/getLetterMatchCount'
 import { State } from '../redux.store'
 
 /* Types */
@@ -21,6 +22,7 @@ interface guessWordFailedAction {
    type: typeof actionTypes.GUESS_WORD_FAILED
    error: null | Error
    guessedWord: string
+   letterMatchCount: number
 }
 
 interface guessWordSuccessAction {
@@ -44,11 +46,13 @@ export const guessWordRequest = (): guessWordRequestAction => ({
 
 export const guessWordFailed = (
    error: Error,
-   guessedWord: string
+   guessedWord: string,
+   letterMatchCount: number
 ): guessWordFailedAction => ({
    type: actionTypes.GUESS_WORD_FAILED,
    error,
-   guessedWord
+   guessedWord,
+   letterMatchCount
 })
 
 export const guessWordSuccess = (): guessWordSuccessAction => ({
@@ -60,12 +64,25 @@ export const guessedWord = (guessedWord: string) => {
       dispatch(guessWordIdle())
       dispatch(guessWordRequest())
 
-      const {
-         guessWord: { data }
-      } = getState()
+      const { secretWord } = getState()
+      if (!secretWord.data.secretWord) {
+         return dispatch(
+            guessWordFailed(new Error('Missing secret word'), guessedWord, 0)
+         )
+      }
 
-      if (guessedWord !== data.secretWord) {
-         return dispatch(guessWordFailed(new Error('No equal'), guessedWord))
+      if (guessedWord !== secretWord.data.secretWord) {
+         const letterMatchCount = getLetterMatchCount(
+            guessedWord,
+            secretWord.data.secretWord
+         )
+         return dispatch(
+            guessWordFailed(
+               new Error('No equal'),
+               guessedWord,
+               letterMatchCount
+            )
+         )
       }
 
       dispatch(guessWordSuccess())

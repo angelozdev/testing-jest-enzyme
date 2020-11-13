@@ -1,11 +1,13 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import reducer from './reducers'
 import { GuessWordState } from './reducers/guessWord.reducer'
+import { SecretWordState } from './reducers/secretWord.reducer'
 import Thunk from 'redux-thunk'
 
 /* Types */
 export interface State {
    guessWord: GuessWordState
+   secretWord: SecretWordState
 }
 
 const composeEnhancers =
