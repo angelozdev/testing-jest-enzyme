@@ -3,13 +3,15 @@ import {
    secretWordSuccess,
    secretWordFailed,
    secretWordIdle,
-   secretWordRequest
+   secretWordRequest,
+   secretWord
 } from '../../../redux/actions/secretWord.action'
 
 import { AxiosError } from 'axios'
 import moxios from 'moxios'
+import { storeFactory } from '../../../utils/testing'
 
-describe('getSecretWord action creator', () => {
+describe('secretWord action creator', () => {
    /* Setup */
    beforeEach(() => {
       moxios.install()
@@ -20,7 +22,29 @@ describe('getSecretWord action creator', () => {
    })
 
    /* Tests */
-   test('adds response word to the state', () => {})
+   test('adds response word to the state', (done) => {
+      const secretWordMock = 'party'
+      const store = storeFactory()
+
+      moxios.wait(() => {
+         let request = moxios.requests.mostRecent()
+         request.respondWith({
+            status: 200,
+            response: secretWordMock
+         })
+      })
+
+      store
+         .dispatch(secretWord())
+         .then(() => {
+            const newState = store.getState()
+            expect(newState.secretWord.data.secretWord).toEqual(secretWordMock)
+            done()
+         })
+         .catch((err: AxiosError) => {
+            done(err)
+         })
+   })
 })
 
 describe('Actions return correct type', () => {

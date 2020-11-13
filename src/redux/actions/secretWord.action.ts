@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios'
+import { url } from 'inspector'
 import { Dispatch } from 'redux'
 
 /* Types */
@@ -55,17 +56,17 @@ export const secretWordSuccess = (word: string): secretWordSuccessAction => ({
 })
 
 export function secretWord() {
-   return (dispatch: Dispatch) => {
+   return async (dispatch: Dispatch): Promise<void> => {
       dispatch(secretWordIdle())
       dispatch(secretWordRequest())
 
       return axios({
          method: 'GET',
-         baseURL: 'http://localhost:3030'
+         baseURL: 'http://localhost:3030',
+         url: '/'
       })
          .then(({ data: word }) => {
             console.log(word)
-
             dispatch(secretWordSuccess(word))
          })
          .catch((error) => {
