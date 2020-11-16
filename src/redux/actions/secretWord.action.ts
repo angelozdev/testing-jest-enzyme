@@ -33,6 +33,7 @@ export type secretWordActions =
    | secretWordRequestAction
    | secretWordFailedAction
    | secretWordSuccessAction
+   | Promise<void>
 
 /* Actions */
 export const secretWordIdle = (): secretWordIdleAction => ({
@@ -60,11 +61,10 @@ export function secretWord() {
       dispatch(secretWordIdle())
       dispatch(secretWordRequest())
 
-      return axios({
-         method: 'GET',
-         baseURL: 'http://localhost:3030',
-         url: '/'
-      })
+      return axios
+         .get('/', {
+            baseURL: 'http://localhost:3030'
+         })
          .then(({ data: word }) => {
             console.log(word)
             dispatch(secretWordSuccess(word))

@@ -7,38 +7,39 @@ import {
    secretWord
 } from '../../../redux/actions/secretWord.action'
 
-import { AxiosError } from 'axios'
-import moxios from 'moxios'
+import axios, { AxiosError } from 'axios'
+/* import moxios from 'moxios' */
 import { storeFactory } from '../../../utils/testing'
+jest.mock('axios')
 
 describe('secretWord action creator', () => {
    /* Setup */
-   beforeEach(() => {
+   /* beforeEach(() => {
       moxios.install()
    })
 
    afterEach(() => {
       moxios.uninstall()
-   })
+   }) */
 
    /* Tests */
    test('adds response word to the state', (done) => {
-      const secretWordMock = 'party'
+      const dataMock = { data: 'party' }
       const store = storeFactory()
 
-      moxios.wait(() => {
-         let request = moxios.requests.mostRecent()
-         request.respondWith({
-            status: 200,
-            response: secretWordMock
-         })
+      const mockAxios = {
+         get: axios.get as jest.Mock
+      }
+
+      mockAxios.get.mockImplementationOnce(() => {
+         return Promise.resolve(dataMock)
       })
 
       store
          .dispatch(secretWord())
          .then(() => {
             const newState = store.getState()
-            expect(newState.secretWord.data.secretWord).toEqual(secretWordMock)
+            expect(newState.secretWord.data.secretWord).toEqual(dataMock.data)
             done()
          })
          .catch((err: AxiosError) => {
